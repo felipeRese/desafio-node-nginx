@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  db: 
+    container_name: my-sql
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: full-cycle
+    networks:
+      - nginx-net
+
+  app:
+    depends_on: 
+      - db
+    restart: always
+    container_name: node-app
+    build: ./app/
+    networks:
+      - nginx-net
+    ports:
+     - 3000:3000
+  ngnix:
+    restart: always
+    container_name: nginx-server
+    build: ./nginx/
+    networks:
+      - nginx-net
+    ports:
+      - 8080:80
+
+networks:
+  nginx-net:
+    name: nginx-net
+    driver: bridge

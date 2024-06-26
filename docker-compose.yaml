@@ -23,6 +23,8 @@ services:
       - nginx-net
     volumes:
       - "./app/src/:/usr/src/app"
+    ports:
+      - 3000:3000
 
   nginx:
     restart: always

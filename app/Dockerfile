@@ -1,13 +1,10 @@
 FROM node
 
-WORKDIR /src/
+WORKDIR /usr/src/app
 
-COPY ./src/ /src/
-
-RUN npm install
-
-COPY ./wait-for-it.sh .
+COPY ./src .
 
 RUN chmod +x ./wait-for-it.sh;
 
-EXPOSE 3000
+RUN npm install
+

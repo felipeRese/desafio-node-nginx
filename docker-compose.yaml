@@ -16,13 +16,15 @@ services:
     depends_on: 
       - db
     restart: always
-    entrypoint: /src/wait-for-it.sh db:3306 --timeout=120 -- node server.js
+    entrypoint: /usr/src/app/wait-for-it.sh db:3306 --timeout=120 -- node server.js
     container_name: node-app
     build: ./app/
     networks:
       - nginx-net
     ports:
      - 3000:3000
+    volumes:
+      - "./app/src/:/usr/src/app"
   ngnix:
     restart: always
     container_name: nginx-server

@@ -39,6 +39,3 @@ networks:
   nginx-net:
     name: nginx-net
     driver: bridge
-
-volumes:
-  db_data:

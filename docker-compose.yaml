@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  db: 
+  db:
     container_name: my-sql
     image: mysql:5.7
     command: --default-authentication-plugin=mysql_native_password
@@ -16,16 +16,15 @@ services:
     depends_on: 
       - db
     restart: always
-    entrypoint: /usr/src/app/wait-for-it.sh db:3306 --timeout=120 -- node server.js
+    entrypoint: ["./wait-for-it.sh", "db:3306", "--timeout=80", "--", "sh", "-c", "npm install && node server.js"]
     container_name: node-app
     build: ./app/
     networks:
       - nginx-net
-    ports:
-     - 3000:3000
     volumes:
       - "./app/src/:/usr/src/app"
-  ngnix:
+
+  nginx:
     restart: always
     container_name: nginx-server
     build: ./nginx/
@@ -40,3 +39,6 @@ networks:
   nginx-net:
     name: nginx-net
     driver: bridge
+
+volumes:
+  db_data:

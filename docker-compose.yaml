@@ -16,6 +16,7 @@ services:
     depends_on: 
       - db
     restart: always
+    entrypoint: /src/wait-for-it.sh db:3306 --timeout=120 -- node server.js
     container_name: node-app
     build: ./app/
     networks:
@@ -30,6 +31,8 @@ services:
       - nginx-net
     ports:
       - 8080:80
+    depends_on:
+      - app
 
 networks:
   nginx-net:

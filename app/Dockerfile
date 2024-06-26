@@ -6,6 +6,8 @@ COPY ./src/ /src/
 
 RUN npm install
 
-ENTRYPOINT [ "npm", "start" ]
+COPY ./wait-for-it.sh .
+
+RUN chmod +x ./wait-for-it.sh;
 
 EXPOSE 3000
